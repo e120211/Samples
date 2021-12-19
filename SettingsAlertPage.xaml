@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ctl:TContentPage
+    Title="{Binding Locale[TitleNotifications]}"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ctl="clr-namespace:DailyApp.Controls;assembly=MyApp"
+    xmlns:uc="clr-namespace:DailyApp.UserControls;assembly=MyApp"
+    x:Class="MyApp.Pages.SettingsAlertPage">
+    
+    <ContentPage.Content>
+        <Grid x:Name="gridBase">
+            <StackLayout x:Name="stackSettingsConnection" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid VerticalOptions="FillAndExpand" RowDefinitions="*,Auto" ColumnDefinitions="*">
+                    <ctl:TScrollView Grid.Row="0" Grid.Column="0" AnimateScroll="True" IsScrollable="True" OverScrollModeType="Never">
+                        <StackLayout Padding="12,12,12,12" Spacing="6">
+
+                            <Grid RowSpacing="0" ColumnSpacing="12" RowDefinitions="Auto" ColumnDefinitions="*,Auto">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Locale[LabelGetPUSH]}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource TLabelForm}" />
+                                <Switch Grid.Row="0" Grid.Column="1" x:Name="chkAlertsIsEnabled" IsToggled="False" VerticalOptions="Center" HorizontalOptions="End" Toggled="chkAlertsIsEnabled_Toggled" />
+                            </Grid>
+                            <BoxView Style="{StaticResource TExpanderDivider}" />
+                            <Grid RowSpacing="0" ColumnSpacing="12" RowDefinitions="Auto" ColumnDefinitions="*,Auto">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Locale[LabelGetNotifications]}" VerticalOptions="Center" HorizontalOptions="Start" Style="{StaticResource TLabelForm}" />
+                                <Switch Grid.Row="0" Grid.Column="1" x:Name="chkNotifyIsEnabled" IsToggled="False" VerticalOptions="Center" HorizontalOptions="End" Toggled="chkNotifyIsEnabled_Toggled" />
+                            </Grid>
+                            <BoxView Style="{StaticResource TExpanderDivider}" />
+
+                            <!--Scheduler-->
+                            <Grid Margin="0,6,0,0" RowDefinitions="Auto" ColumnDefinitions="*">
+                                <BoxView Grid.Row="0" Grid.Column="0" MinimumHeightRequest="50" CornerRadius="25" Margin="0,0,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource TColorGrayLight}" />
+                                <BoxView Grid.Row="0" Grid.Column="0" MinimumHeightRequest="48" CornerRadius="24" Margin="1,1,1,1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource TColorWhite}" />
+                                <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" RowDefinitions="50" ColumnDefinitions="50,*,50">
+                                    <BoxView Grid.Row="0" Grid.Column="0" HeightRequest="40" WidthRequest="40" CornerRadius="20" Margin="0,0,0,0" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="{StaticResource TColorGrayExtraDark}" Opacity="0.15" />
+                                    <Label Grid.Row="0" Grid.Column="0" Text="&#xf34e;" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource TExpanderIconStyle}" />
+                                    <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Vertical" Padding="6,0,12,0" Spacing="0" VerticalOptions="CenterAndExpand">
+                                        <Label Text="{Binding Locale[LabelSchedule]}" Style="{StaticResource TExpanderTitleStyle}" />
+                                        <Label x:Name="lblSchedulerDescription" Text="" Style="{StaticResource TExpanderDescriptionStyle}" LineBreakMode="TailTruncation" />
+                                    </StackLayout>
+                                    <Label Grid.Row="0" Grid.Column="2" x:Name="lblArrowScheduler" Text="&#xf105;" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource TExpanderArrowStyle}" />
+                                    <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="50" CornerRadius="25" Margin="0,0,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center" BackgroundColor="{StaticResource TColorGrayExtraDark}" Opacity="0.05">
+                                        <BoxView.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnMoreScheduler_Tapped" />
+                                        </BoxView.GestureRecognizers>
+                                    </BoxView>
+                                </Grid>
+                                <StackLayout Grid.Row="0" Grid.Column="0" x:Name="phdContentScheduler" IsVisible="False" Margin="12,56,12,18">
+
+                                    <Grid RowSpacing="0" ColumnSpacing="0">
+                                        <StackLayout>
+                                            <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
+                                                <Label Text="{Binding Locale[LabelPeriodFrom]}" VerticalOptions="Center" HorizontalOptions="End" Style="{StaticResource TLabelForm}" />
+                                                <TimePicker x:Name="txtStartTime" Time="00:00" Format="HH:mm" PropertyChanged="txtStartTime_PropertyChanged" VerticalOptions="Center" HorizontalOptions="End" TextColor="{StaticResource TColorSuccess}" />
+                                                <Label Text="{Binding Locale[LabelPeriodTo]}" VerticalOptions="Center" HorizontalOptions="End" Style="{StaticResource TLabelForm}" Margin="0,0,0,0" />
+                                                <TimePicker x:Name="txtEndTime" Time="00:00" Format="HH:mm" PropertyChanged="txtEndTime_PropertyChanged" VerticalOptions="Center" HorizontalOptions="End" TextColor="{StaticResource TColorSuccess}" />
+                                            </StackLayout>
+                                            <Grid RowSpacing="0" ColumnSpacing="0" RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*,*,*,*,*">
+                                                <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" Text="{Binding Locale[DayMO]}" TextTransform="Uppercase" Style="{StaticResource TLabelSmall}" />
+                                                <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" Text="{Binding Locale[DayTU]}" TextTransform="Uppercase" Style="{StaticResource TLabelSmall}" />
+                                                <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" Text="{Binding Locale[DayWE]}" TextTransform="Uppercase" Style="{StaticResource TLabelSmall}" />
+                                                <Label Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" Text="{Binding Locale[DayTH]}" TextTransform="Uppercase" Style="{StaticResource TLabelSmall}" />
+                                                <Label Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" Text="{Binding Locale[DayFR]}" TextTransform="Uppercase" Style="{StaticResource TLabelSmall}" />
+                                                <Label Grid.Row="0" Grid.Column="5" HorizontalOptions="Center" Text="{Binding Locale[DaySA]}" TextTransform="Uppercase" Style="{StaticResource TLabelSmall}" TextColor="{StaticResource TColorDanger}" />
+                                                <Label Grid.Row="0" Grid.Column="6" HorizontalOptions="Center" Text="{Binding Locale[DaySU]}" TextTransform="Uppercase" Style="{StaticResource TLabelSmall}" TextColor="{StaticResource TColorDanger}" />
+
+                                                <CheckBox Grid.Row="1" Grid.Column="0" CheckedChanged="chkAlertsWeekdayMO_CheckedChanged" x:Name="chkAlertsWeekdayMO" HorizontalOptions="Center" />
+                                                <CheckBox Grid.Row="1" Grid.Column="1" CheckedChanged="chkAlertsWeekdayTU_CheckedChanged" x:Name="chkAlertsWeekdayTU" HorizontalOptions="Center" />
+                                                <CheckBox Grid.Row="1" Grid.Column="2" CheckedChanged="chkAlertsWeekdayWE_CheckedChanged" x:Name="chkAlertsWeekdayWE" HorizontalOptions="Center" />
+                                                <CheckBox Grid.Row="1" Grid.Column="3" CheckedChanged="chkAlertsWeekdayTH_CheckedChanged" x:Name="chkAlertsWeekdayTH" HorizontalOptions="Center" />
+                                                <CheckBox Grid.Row="1" Grid.Column="4" CheckedChanged="chkAlertsWeekdayFR_CheckedChanged" x:Name="chkAlertsWeekdayFR" HorizontalOptions="Center" />
+                                                <CheckBox Grid.Row="1" Grid.Column="5" CheckedChanged="chkAlertsWeekdaySA_CheckedChanged" x:Name="chkAlertsWeekdaySA" HorizontalOptions="Center" />
+                                                <CheckBox Grid.Row="1" Grid.Column="6" CheckedChanged="chkAlertsWeekdaySU_CheckedChanged" x:Name="chkAlertsWeekdaySU" HorizontalOptions="Center" />
+                                            </Grid>
+
+                                        </StackLayout>
+                                    </Grid>
+
+                                </StackLayout>
+                            </Grid>
+                            <!--///Scheduler-->
+
+                            <!--Parameters-->
+                            <Grid Margin="0,6,0,0" RowDefinitions="Auto" ColumnDefinitions="*">
+                                <BoxView Grid.Row="0" Grid.Column="0" MinimumHeightRequest="50" CornerRadius="25" Margin="0,0,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource TColorGrayLight}" />
+                                <BoxView Grid.Row="0" Grid.Column="0" MinimumHeightRequest="48" CornerRadius="24" Margin="1,1,1,1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource TColorWhite}" />
+                                <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" RowDefinitions="50" ColumnDefinitions="50,*,50">
+                                    <BoxView Grid.Row="0" Grid.Column="0" HeightRequest="40" WidthRequest="40" CornerRadius="20" Margin="0,0,0,0" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="{StaticResource TColorGrayExtraDark}" Opacity="0.15" />
+                                    <Label Grid.Row="0" Grid.Column="0" Text="&#xf7d9;" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource TExpanderIconStyle}" />
+                                    <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Vertical" Padding="6,0,12,0" Spacing="0" VerticalOptions="CenterAndExpand">
+                                        <Label Text="{Binding Locale[LabelExtraOptions]}" Style="{StaticResource TExpanderTitleStyle}" />
+                                        <Label x:Name="lblParametersDescription" Text="" Style="{StaticResource TExpanderDescriptionStyle}" LineBreakMode="TailTruncation" />
+                                    </StackLayout>
+                                    <Label Grid.Row="0" Grid.Column="2" x:Name="lblArrowParameters" Text="&#xf105;" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource TExpanderArrowStyle}" />
+                                    <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HeightRequest="50" CornerRadius="25" Margin="0,0,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center" BackgroundColor="{StaticResource TColorGrayExtraDark}" Opacity="0.05">
+                                        <BoxView.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnMoreParameters_Tapped" />
+                                        </BoxView.GestureRecognizers>
+                                    </BoxView>
+                                </Grid>
+                                <StackLayout Grid.Row="0" Grid.Column="0" x:Name="phdContentParameters" IsVisible="False" Margin="12,56,12,18">
+
+                                    <Grid>
+                                        <StackLayout>
+                                            <Grid RowSpacing="0" ColumnSpacing="12" RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+                                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Locale[LabelPriority]}" Style="{StaticResource TLabelForm}" />
+                                                <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="0,6,0,0">
+                                                    <Label x:Name="lblAlertPriority" VerticalOptions="Center" Text="" Style="{StaticResource TLabelDescription}" TextColor="{StaticResource TColorSuccess}">
+                                                        <Label.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="btnSelectAlertPriority_Tapped"  NumberOfTapsRequired="1" />
+                                                        </Label.GestureRecognizers>
+                                                    </Label>
+                                                </StackLayout>
+                                                <StackLayout Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Padding="12,0,12,0">
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="btnSelectAlertPriority_Tapped" NumberOfTapsRequired="1" />
+                                                    </StackLayout.GestureRecognizers>
+                                                    <Label Text="&#xf044;" Style="{StaticResource TIconMedium}" TextColor="{StaticResource TColorSuccess}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                                                </StackLayout>
+                                            </Grid>
+
+                                            <BoxView Style="{StaticResource TExpanderDivider}" />
+
+                                            <Grid RowSpacing="0" ColumnSpacing="12" RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+                                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Locale[LabelVisibility]}" Style="{StaticResource TLabelForm}" />
+                                                <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="0,6,0,0">
+                                                    <Label x:Name="lblAlertVisibility" VerticalOptions="Center" Text="" Style="{StaticResource TLabelDescription}" TextColor="{StaticResource TColorSuccess}">
+                                                        <Label.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="btnSelectAlertVisibility_Tapped"  NumberOfTapsRequired="1" />
+                                                        </Label.GestureRecognizers>
+                                                    </Label>
+                                                </StackLayout>
+                                                <StackLayout Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Padding="12,0,12,0">
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="btnSelectAlertVisibility_Tapped" NumberOfTapsRequired="1" />
+                                                    </StackLayout.GestureRecognizers>
+                                                    <Label Text="&#xf044;" Style="{StaticResource TIconMedium}" TextColor="{StaticResource TColorSuccess}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                                                </StackLayout>
+                                            </Grid>
+
+                                        </StackLayout>
+                                    </Grid>
+
+                                </StackLayout>
+                            </Grid>
+                            <!--///Parameters-->
+
+                        </StackLayout>
+                    </ctl:TScrollView>
+
+                    <StackLayout Grid.Row="1" Grid.Column="0" Margin="12,6,12,12">
+                        <Button x:Name="btnUpdate" IsEnabled="True" Text="{Binding Locale[ButtonUpdate]}" Style="{StaticResource TButtonBase}" Clicked="btnUpdate_Clicked" />
+                    </StackLayout>
+
+                </Grid>
+            </StackLayout>
+
+            <uc:LoadingView x:Name="blockLoading" IsVisible="False" />
+            
+        </Grid>
+    </ContentPage.Content>
+</ctl:TContentPage>

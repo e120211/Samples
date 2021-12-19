@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ctl:TContentView
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ctl="clr-namespace:MyApp.Controls;assembly=MyApp"
+    x:Class="MyApp.UserControls.LoadingView">
+    
+    <ContentView.Content>
+        <Grid RowDefinitions="*" ColumnDefinitions="*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" InputTransparent="False">
+
+            <StackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Opacity="0.15" BackgroundColor="{StaticResource TColorBase}" />
+
+            <Frame Grid.Row="0" Grid.Column="0" WidthRequest="28" HeightRequest="28" CornerRadius="28" Padding="3,3,3,3" Margin="12,12,12,12" BackgroundColor="{StaticResource TColorWhite}" HorizontalOptions="Center" VerticalOptions="Center">
+                <ActivityIndicator IsRunning="True" Color="{StaticResource TColorBlue}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <ActivityIndicator.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnDoubleTapped" />
+                    </ActivityIndicator.GestureRecognizers>
+                </ActivityIndicator>
+            </Frame>
+
+            <Frame x:Name="btnClose" Grid.Row="0" Grid.Column="0" Opacity="0" WidthRequest="28" HeightRequest="28" CornerRadius="56" VerticalOptions="Start" HorizontalOptions="End" Padding="1,1,1,1" Margin="12,12,12,12" BorderColor="{StaticResource TColorGray}" BackgroundColor="{StaticResource TColorWhite}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnCloseTapped" />
+                </Frame.GestureRecognizers>
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="&#xf00d;" TextColor="{StaticResource TColorGray}" Style="{StaticResource TIconLarge}" />
+                </StackLayout>
+            </Frame>
+            
+        </Grid>
+    </ContentView.Content>
+</ctl:TContentView>
